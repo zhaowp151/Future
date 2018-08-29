@@ -16,6 +16,7 @@ import java.util.Date;
 import javax.annotation.Generated;
 
 import com.future.core.util.ReflexUtil;
+import com.future.core.util.StringUtil;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.BeanPath;
@@ -43,7 +44,7 @@ public class QWpMain extends EntityPathBase<WpMain>{
 		return createNumber(fieldName, Long.class);
 	}
 	public static QWpMain getQWpMain(String business, String className) {
-		Class<WpMain> model = ReflexUtil.getClassByModelName(ReflexUtil.getModelPath(business, upperCase(className)));
+		Class<WpMain> model = ReflexUtil.getClassByModelName(ReflexUtil.getModelPath(business, StringUtil.upperCase(className)));
 		return new QWpMain(model,className);
 	}
 	/** 
@@ -54,13 +55,5 @@ public class QWpMain extends EntityPathBase<WpMain>{
 	 */
 	public QWpMain(Class<? extends WpMain> type, String variable) {
 		super(type, variable);
-	}
-	//首字符大写
-	public static String upperCase(String str) {
-	    char[] ch = str.toCharArray();
-	    if (ch[0] >= 'a' && ch[0] <= 'z') {
-	        ch[0] = (char) (ch[0] - 32);
-	    }
-	    return new String(ch);
 	}
 }

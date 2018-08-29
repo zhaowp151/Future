@@ -53,9 +53,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			
 			form.on('submit(submit)', function(data) {
+				
+				
 				$.ajax({
 					async:false,
-					url : "wpMain/core/WpFunction/add",
+					url : "wpMain/core/WpFunction/edit",
 					data: data.field,
 					type : 'post'
 				});
