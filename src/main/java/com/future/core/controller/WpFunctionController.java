@@ -13,14 +13,19 @@ package com.future.core.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.data.querydsl.QSort;
+import org.springframework.data.querydsl.QueryDslUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,8 +38,13 @@ import com.future.core.model.WpFunction;
 import com.future.core.model.WpScope;
 import com.future.core.model.base.QWpMain;
 import com.future.core.model.base.WpMain;
+import com.future.core.util.DateUtil;
+import com.future.core.util.QuerydslUtil;
 import com.future.core.util.RequestResult;
 import com.future.core.util.ResultUtil;
+import com.future.core.util.WhereModel;
+import com.future.core.util.WhereModel.Operation;
+import com.future.core.util.WhereModel.Type;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -51,9 +61,9 @@ public class WpFunctionController extends BaseController{
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	WpFunctionRepository functionRepository;
+	private WpFunctionRepository functionRepository;
 	@Autowired
-	WpScopeRepository scopeRepository;
+	private WpScopeRepository scopeRepository;
 	@Autowired
 	EntityManager em;
 	
@@ -77,10 +87,20 @@ public class WpFunctionController extends BaseController{
 		orderSpecifiers.add(id1);
 		QSort sort = new QSort(orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]));
 		Pageable pageable = new QPageRequest(0, 9,sort);
-		Iterable<WpFunction> wpFunctions = functionRepository.findAll(wpFunction.getStringPath("flg").eq("d").or(wpFunction.getLongPath("id").eq(21L)),pageable);
+		Map<String, String> map = new HashMap<>();
+		map.put("createTime", "DESC");
+		WhereModel whereModel = new WhereModel();
+		//whereModel.setType(Type.AND);
+		whereModel.setFieldName("createTime");
+//		whereModel.setNumberFrom(11);
+//		whereModel.setNumberTo(22);
+		whereModel.setFrom(DateUtil.getNowMonthFirstDay());
+		whereModel.setTo(new Date());
+		whereModel.setOperation(Operation.NOTBETWEEN);
+		Page<WpFunction> wpFunctions = functionRepository.findAll(QuerydslUtil.buildPredicate(wpFunction, whereModel),QuerydslUtil.buildPageRequest(1, 2, wpFunction, map));
 //		scopeRepository.save(scope);
 //		functionRepository.save(function);
 //		System.out.println(SpringContextHolder.getBean("wpFunctionRepository"));
-		return ResultUtil.success(wpFunctions);
+		return ResultUtil.successPage(wpFunctions);
 	}
 }

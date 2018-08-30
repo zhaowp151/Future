@@ -11,10 +11,10 @@
  */
 package com.future.core.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.future.core.model.base.WpMain;
+import com.querydsl.core.types.Predicate;
 
 /** 
  * @ClassName: WpMainService 
@@ -27,4 +27,5 @@ public interface WpMainService {
 	public WpMain createWpMain(String business, String className, Map<Object, Object> map);
 	//组装多个实体对象
 	public Iterable<WpMain> createWpMains(String business, String className, Map<Object, Object> map);
+	
 }

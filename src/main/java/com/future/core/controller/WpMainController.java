@@ -33,6 +33,7 @@ import com.future.core.util.RequestResult;
 import com.future.core.util.ResultUtil;
 import com.future.core.util.SpringContextHolder;
 import com.future.core.util.StringUtil;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 /** 
  * @ClassName: WpMainController 
@@ -45,7 +46,8 @@ import com.future.core.util.StringUtil;
 public class WpMainController extends BaseController{
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	WpMainService mainService;
+	private WpMainService mainService;
+	private JPAQueryFactory queryFactory;
 	
 	//公共的添加方法（单个添加）
 	@RequestMapping(value="{sysName}/{modelName}/add",method=RequestMethod.POST)
@@ -102,7 +104,7 @@ public class WpMainController extends BaseController{
 		return ResultUtil.success(wpMains);
 	}
 	
-	//公共的查询方法
+	//公共的查询方法(单表)
 	@RequestMapping(value="{sysName}/{modelName}/query",method=RequestMethod.POST)
 	@ResponseBody
 	public RequestResult<WpMain> queryWpMainModel(@PathVariable("sysName") String sysName,@PathVariable("modelName") String modelName,@RequestParam Map<Object, Object> map){

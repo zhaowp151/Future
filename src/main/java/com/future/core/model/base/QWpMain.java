@@ -11,15 +11,10 @@
  */
 package com.future.core.model.base;
 
-import java.util.Date;
-
 import javax.annotation.Generated;
 
 import com.future.core.util.ReflexUtil;
 import com.future.core.util.StringUtil;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.BeanPath;
 import com.querydsl.core.types.dsl.DatePath;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
@@ -33,6 +28,8 @@ import com.querydsl.core.types.dsl.StringPath;
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QWpMain extends EntityPathBase<WpMain>{
+	
+	private Class<?> qWpMainModel;
 
 	public DatePath<java.util.Date> getDatePath(String fieldName){
 		return createDate(fieldName, java.util.Date.class);
@@ -42,6 +39,12 @@ public class QWpMain extends EntityPathBase<WpMain>{
 	}
 	public NumberPath<Long> getLongPath(String fieldName){
 		return createNumber(fieldName, Long.class);
+	}
+	public NumberPath<Integer> getIntegerPath(String fieldName){
+		return createNumber(fieldName, Integer.class);
+	}
+	public NumberPath<Float> getFloatPath(String fieldName){
+		return createNumber(fieldName, Float.class);
 	}
 	public static QWpMain getQWpMain(String business, String className) {
 		Class<WpMain> model = ReflexUtil.getClassByModelName(ReflexUtil.getModelPath(business, StringUtil.upperCase(className)));
@@ -55,5 +58,20 @@ public class QWpMain extends EntityPathBase<WpMain>{
 	 */
 	public QWpMain(Class<? extends WpMain> type, String variable) {
 		super(type, variable);
+		setqWpMainModel(type);
 	}
+	/**
+	 * @return the qWpMainModel
+	 */
+	public Class<?> getqWpMainModel() {
+		return qWpMainModel;
+	}
+	/**
+	 * @param qWpMainModel the qWpMainModel to set
+	 */
+	public void setqWpMainModel(Class<?> qWpMainModel) {
+		this.qWpMainModel = qWpMainModel;
+	}
+	
+	
 }

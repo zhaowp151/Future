@@ -14,6 +14,8 @@ package com.future.core.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.future.core.model.base.WpMain;
 
 /** 
@@ -24,28 +26,34 @@ import com.future.core.model.base.WpMain;
  */
 public class ResultUtil {
 	 /**
-     * 成功请求的结果封装
+     * 成功请求的结果封装(对于分页查询)
 	 * @param <T>
      * @param t
      * @param <T>
      * @return
      */
-    public static RequestResult<WpMain> success(Iterable<? extends WpMain> t) {
+    public static RequestResult<WpMain> successPage(Page<? extends WpMain> p) {
         RequestResult<WpMain> result = new RequestResult<WpMain>();
         result.setCode(1);
         result.setMsg("success");
-        
-        Class<Iterable<? extends WpMain>> tType = (Class<Iterable<? extends WpMain>>) t.getClass();
-    	String type = tType.getName();
-    	if(!"java.util.ArrayList".equals(type)) {
-    		List<WpMain> wpMains = new ArrayList<>();
-    		for (WpMain wpMain : t) {
-    			wpMains.add(wpMain);
-			}
-    		result.setData(wpMains);
-    	}else {
-    		result.setData(t);
-    	}
+        List<WpMain> wpMains = (List<WpMain>) p.getContent();
+        result.setData(wpMains);
+        result.setCount(p.getTotalElements());
+        return result;
+    }
+    
+    /**
+     * 成功请求的结果封装(对于增删改)
+	 * @param <T>
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public static RequestResult<WpMain> success(List<? extends WpMain> t) {
+        RequestResult<WpMain> result = new RequestResult<WpMain>();
+        result.setCode(1);
+        result.setMsg("success");
+        result.setData(t);
         return result;
     }
 

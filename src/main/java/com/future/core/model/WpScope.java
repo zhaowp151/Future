@@ -33,9 +33,9 @@ public class WpScope implements WpMain {
 	@Id
 	@GeneratedValue(generator  = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	Long id;
-	String flg;
-	String code;
+	private Long id;
+	private String flg;
+	private String code;
 
 	
 	

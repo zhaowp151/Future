@@ -16,6 +16,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.future.core.model.base.QWpMain;
+import com.future.core.model.base.WpMain;
+
 /** 
  * @ClassName: ReflexUtil 
  * @Description: 反射工具
@@ -124,5 +127,22 @@ public class ReflexUtil {
 			}
 		}
 		return modelTypeMap;
+	}
+	
+	//得到实体某字段类型
+	@SuppressWarnings("rawtypes")
+	public static String getModelType(QWpMain qWpMain,String field) {
+		
+		Class model = qWpMain.getqWpMainModel();
+		Field[] fields = model.getDeclaredFields();
+		for (Field field0 : fields) {
+			String fieldName = field0.getName();
+			if(fieldName.equals(field)) {
+				return field0.getType().toString();
+			}
+			
+		}
+		return null;
+		
 	}
 }

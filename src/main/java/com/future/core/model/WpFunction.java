@@ -39,9 +39,9 @@ public class WpFunction implements WpMain{
 	@Id
 	@GeneratedValue(generator  = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	Long id;
+	private Long id;
 	
-	String flg;
+	private String flg;
 	
     @Temporal(TemporalType.DATE)//生成yyyy-MM-dd类型的日期
     //出参时间格式化
